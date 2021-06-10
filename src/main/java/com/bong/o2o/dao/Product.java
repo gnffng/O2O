@@ -1,9 +1,6 @@
 package com.bong.o2o.dao;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public class Product {
@@ -11,8 +8,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String name_kor;
-    String name_en;
+    String nameKor;
+    String nameEn;
     Long price;
 
     public Long getId() {
@@ -23,20 +20,20 @@ public class Product {
         this.id = id;
     }
 
-    public String getName_kor() {
-        return name_kor;
+    public String getNameKor() {
+        return nameKor;
     }
 
-    public void setName_kor(String name_kor) {
-        this.name_kor = name_kor;
+    public void setNameKor(String name_kor) {
+        this.nameKor = name_kor;
     }
 
-    public String getName_en() {
-        return name_en;
+    public String getNameEn() {
+        return nameEn;
     }
 
-    public void setName_en(String name_en) {
-        this.name_en = name_en;
+    public void setNameEn(String name_en) {
+        this.nameEn = name_en;
     }
 
     public Long getPrice() {

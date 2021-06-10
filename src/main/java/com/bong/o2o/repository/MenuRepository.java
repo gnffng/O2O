@@ -1,9 +1,16 @@
 package com.bong.o2o.repository;
 
-import com.bong.o2o.dao.main.Salady;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.bong.o2o.dao.MainMenu;
 
-@Repository
-public interface MenuRepository extends JpaRepository<Salady,Long> {
+import java.util.List;
+import java.util.Optional;
+
+public interface MenuRepository {
+    MainMenu save(MainMenu member);
+    Optional<MainMenu> findById(Long id);
+    Optional<MainMenu> findByNameKor(String name);
+    Optional<MainMenu> findByNameEn(String name);
+    Optional<MainMenu> findByCategory(String ctg);
+    List<MainMenu> findAll();
+    void delete(MainMenu mainMenu);
 }
