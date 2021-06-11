@@ -1,6 +1,6 @@
-package com.bong.o2o.repository;
+package com.bong.o2o.repository.product;
 
-import com.bong.o2o.dao.Topping;
+import com.bong.o2o.dao.product.Topping;
 
 import java.util.List;
 import java.util.Optional;

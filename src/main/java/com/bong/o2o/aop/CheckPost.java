@@ -1,15 +1,12 @@
 package com.bong.o2o.aop;
 
-import com.bong.o2o.dao.MainMenu;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
+import com.bong.o2o.dao.product.MainMenu;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class CheckPost {
 
-    @Before("execution(* com.bong.o2o.controller*.addMenu(MainMenu)) && args(mainMenu)")
+    //@Before("execution(* com.bong.o2o.controller*.addMenu(MainMenu)) && args(mainMenu)")
     public void logBeforeWithParam(MainMenu mainMenu){
         System.out.println(mainMenu.getId());
         System.out.println(mainMenu.getNameKor());

@@ -3,10 +3,10 @@ package com.bong.o2o.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.bong.o2o.dao.MainMenu;
-import com.bong.o2o.dao.Topping;
-import com.bong.o2o.repository.MenuRepository;
-import com.bong.o2o.repository.ToppingRepository;
+import com.bong.o2o.dao.product.MainMenu;
+import com.bong.o2o.dao.product.Topping;
+import com.bong.o2o.repository.product.MenuRepository;
+import com.bong.o2o.repository.product.ToppingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +36,9 @@ public class OrderService {
 
     public Optional<MainMenu> readMenuByNameKor(String name){
         return menuRepository.findByNameKor(name);
+    }
+    public Optional<MainMenu> readMenuById(Long id){
+        return menuRepository.findById(id);
     }
 
     ////Update

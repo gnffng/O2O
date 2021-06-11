@@ -1,4 +1,4 @@
-package com.bong.o2o.dao;
+package com.bong.o2o.dao.product;
 
 import javax.persistence.Entity;
 
