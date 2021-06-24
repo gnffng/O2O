@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인페이지</title>
+</head>
+<body>
+    <header></header>
+    <section>
+        <form action="http://localhost:8080/admin/login" method="post">
+            <ul>
+                <li>
+                    <input type="text" id="id" name="id"/>
+                </li>
+                <li>
+                    <input type="password" id="pw" name="passward"/>
+                </li>
+                <li>
+                    <input type="submit" value="로그인">
+                </li>
+            </ul>
+        </form>
+    </section>
+    <footer>
+        <div th:replace="admin/base/footer"/>
+    </footer>
+</body>
+</html>

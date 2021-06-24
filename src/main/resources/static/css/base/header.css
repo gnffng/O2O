@@ -1,0 +1,48 @@
+.header{
+        width:100%;
+        position: fixed;
+        top: 0px;
+        margin-left: 0px;
+        padding: 0px;
+        background: cornflowerblue;
+}
+
+.header > ul{
+        width:800px;
+        margin: auto;
+        padding: 0px;
+        padding: auto;
+        border-top-style: solid;
+        border-top-color: transparent;
+        border-top-width: 5px;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        border-bottom-width: 5px;
+}
+
+.header > ul > a{
+        text-decoration:none;
+}
+
+.header > ul > a > li{
+        width: 24%;
+        display: inline-block;
+        text-align: center;
+        background: darkblue;
+        color: white;
+        font-size: 30px;
+        border-radius: 3px;
+        height: 60px;
+}
+
+.header > ul > a > li > p{
+        margin:0px;
+        margin-top:10px;
+}
+
+section{
+        position: fixed;
+        top: 70px;
+        left: 0px;
+        width: 100%;
+}

@@ -16,13 +16,20 @@ public class AdminService {
     }
 
     public boolean longin(Admin adminForm){
-        Admin admin = adminRepository.findById(adminForm.getId()).orElse(new Admin());
+        try {
+            Admin admin = adminRepository.findById(adminForm.getId()).orElseThrow(IllegalStateException::new);
 
-        if(admin.getPassward().equals(adminForm.getPassward())){
-            return true;
+            if(admin.getPassward().equals(adminForm.getPassward())){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        else{
+        catch(Exception e){
             return false;
         }
+
+
     }
 }

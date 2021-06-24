@@ -12,6 +12,9 @@ public class Product {
     String nameEn;
     Long price;
 
+    @Column(nullable = true, length = 64)
+    String logoFileName;
+
     public Long getId() {
         return id;
     }
@@ -42,5 +45,13 @@ public class Product {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public String getLogoFileName() {
+        return logoFileName;
+    }
+
+    public void setLogoFileName(String logoFileName) {
+        this.logoFileName = logoFileName;
     }
 }

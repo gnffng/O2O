@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>가게</title>
+</head>
+<body>
+    <header>
+        <div th:replace="admin/base/header"/>
+    </header>
+    <section>
+        <form th:action="@{/admin/store}"
+              method="post"
+              enctype="multipart/form-data">
+            <div>
+                <input type="hidden" name="_method" value="put"/>
+                <img th:src="'/image/store/' + ${store.logoFileName}" src="/image/store/default.png"/>
+                <input type="text" name="name" th:value="${store.name}"/>
+                <label>Photos: </label>
+                <input type="file" name="image" accept="image/png, image/jpeg" />
+                <input type="submit" value="upload"/>
+            </div>
+        </form>
+
+        <form th:action="@{/admin/store}"
+              method="post"
+              enctype="multipart/form-data">
+            <div>
+                <input type="submit" value="초기화"/>
+            </div>
+        </form>
+    </section>
+    <footer>
+        <div th:replace="admin/base/footer"/>
+    </footer>
+</body>
+</html>
