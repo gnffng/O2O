@@ -2,6 +2,7 @@ package com.bong.o2o.controller;
 
 import com.bong.o2o.dao.admin.Admin;
 import com.bong.o2o.dao.product.MainMenu;
+import com.bong.o2o.dao.product.MainMenuForm;
 import com.bong.o2o.dao.product.Topping;
 import com.bong.o2o.dao.store.Store;
 import com.bong.o2o.repository.admin.AdminRepository;
@@ -33,6 +34,7 @@ public class AdminController {
     @Autowired
     OrderService orderService;
 
+    //로그인
     @GetMapping("/login")
     public String login(){
         return "admin/login";
@@ -50,11 +52,13 @@ public class AdminController {
         }
     }
 
+    //주문
     @GetMapping("/order")
     public String main(){
         return "admin/order";
     }
 
+    //상품
     @GetMapping("/product")
     public String product(Model model){
         List<MainMenu> menus = orderService.readMenus();
@@ -67,20 +71,68 @@ public class AdminController {
     }
 
     @GetMapping("/product/mainMenu")
-    public String editMainMenu(){
-        return "admin/editMainMenu";
+    public String addMainMenuForm(){
+        return "admin/addMainMenu";
     }
 
     @PostMapping("/product/mainMenu")
-    public String editOrAddMainMenu(){
-        return "redirect:product";
+    public String addMainMenu(MainMenuForm mainMenuForm) throws IOException {
+        String fileName = StringUtils.cleanPath(mainMenuForm.getImage().getOriginalFilename());
+        String uploadDir = "src/main/resources/static/image/mainMenu/";
+        FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
+
+        MainMenu menu = new MainMenu();
+
+        menu.setCategory(mainMenuForm.getCategory());
+        menu.setMaterial(mainMenuForm.getMaterial());
+        menu.setNameKor(mainMenuForm.getNameKor());
+        menu.setNameEn(mainMenuForm.getNameEn());
+        menu.setPrice(mainMenuForm.getPrice());
+        menu.setLogoFileName(fileName);
+
+        orderService.createMenu(menu);
+
+        System.out.println("mainMenu redirect!");
+
+        return "redirect:./";
     }
 
+    @GetMapping("/product/mainMenu/{id}")
+    public String editMainMenuForm(Model model, @PathVariable Long id){
+        model.addAttribute("menu", orderService.readMenuById(id).get());
+        return "admin/editMainMenu";
+    }
+
+    @PutMapping("/product/mainMenu/{id}")
+    public String editMainMenu(MainMenuForm mainMenuForm) throws IOException {
+        String fileName = StringUtils.cleanPath(mainMenuForm.getImage().getOriginalFilename());
+        String uploadDir = "src/main/resources/static/image/mainMenu/";
+        FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
+
+        MainMenu menu = new MainMenu();
+
+        menu.setCategory(mainMenuForm.getCategory());
+        menu.setMaterial(mainMenuForm.getMaterial());
+        menu.setNameKor(mainMenuForm.getNameKor());
+        menu.setNameEn(mainMenuForm.getNameEn());
+        menu.setPrice(mainMenuForm.getPrice());
+        menu.setLogoFileName(fileName);
+
+        orderService.createMenu(menu);
+
+        System.out.println("mainMenu redirect!");
+
+        return "redirect:mainMenu";
+    }
+
+    //통계
     @GetMapping("/statistic")
     public String statistic(){
         return "admin/statistic";
     }
 
+
+    //가게
     @GetMapping("/store")
     public String store(Model model){
         Store store = storeService.readStore();

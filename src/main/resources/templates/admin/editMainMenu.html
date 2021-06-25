@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>edit menu</title>
 </head>
 <body>
-
+    <header>
+        <div th:replace="admin/base/header"/>
+    </header>
+    <section>
+        <form th:action="@{/admin/product/mainMenu}"
+              method="post"
+              enctype="multipart/form-data">
+            <div>
+                <label>제품명(한글) : <input th:value="${menu.nameKor}" type="text" name="nameKor"></label>
+                <label>제품명(영어) : <input th:value="${menu.nameEn}" type="text" name="nameEn"></label>
+                <label>가격 : <input th:value="${menu.price}" type="text" name="price"></label>
+                <label>카테고리 :
+                    <select name="category" th:field="*{menu.category}">
+                        <option th:each="categoryValue : ${T(com.bong.o2o.dao.product.Category).values()}"
+                        th:value="${categoryValue.name()}"
+                        th:text="${categoryValue.name()"}>
+                        </option>
+                    </select>
+                </label>
+                <label>제품구성 : <input th:value="${menu.material}" type="text" name="material"></label>
+                <label>이미지 : <input type="file" name="image" accept="image/png, image/jpeg" /></label>
+                <input type="submit" value="upload"/>
+            </div>
+        </form>
+        <p th:text="${menu.category}"></p>
+    </section>
+    <footer>
+        <div th:replace="admin/base/footer"/>
+    </footer>
 </body>
 </html>

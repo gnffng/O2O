@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.Topping;
+import com.bong.o2o.dao.store.Store;
 import com.bong.o2o.repository.product.MenuRepository;
 import com.bong.o2o.repository.product.ToppingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,18 @@ public class OrderService {
     }
 
     ////Update
+    public MainMenu updateMenu(MainMenu newMenu) {
+        MainMenu menu = menuRepository.findByNameKor(newMenu.getNameKor()).orElse(new MainMenu());
+
+        menu.setCategory(newMenu.getCategory());
+        menu.setMaterial(newMenu.getMaterial());
+        menu.setNameKor(newMenu.getNameKor());
+        menu.setNameEn(newMenu.getNameEn());
+        menu.setPrice(newMenu.getPrice());
+        menu.setLogoFileName(newMenu.getLogoFileName());
+
+        return menuRepository.save(newMenu);
+    }
 
     ////Delete
     public void delete(MainMenu mainMenu){

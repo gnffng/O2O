@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>add menu</title>
+</head>
+<body>
+    <header>
+        <div th:replace="admin/base/header"/>
+    </header>
+    <section>
+        <form th:action="@{/admin/product/mainMenu}"
+              method="post"
+              enctype="multipart/form-data">
+            <div>
+                <label>제품명(한글) : <input type="text" name="nameKor"></label>
+                <label>제품명(영어) : <input type="text" name="nameEn"></label>
+                <label>가격 : <input type="text" name="price"></label>
+                <label>카테고리 :
+                    <select name="category">
+                        <option value="Salady">Salady</option>
+                        <option value="Warmbowl">Warmbowl</option>
+                        <option value="Sand">Sand</option>
+                        <option value="Wrap">Wrap</option>
+                        <option value="WarmWrap">WarmWrap</option>
+                    </select>
+                </label>
+                <label>제품구성 : <input type="text" name="material"></label>
+                <label>이미지 : <input type="file" name="image" accept="image/png, image/jpeg" /></label>
+                <input type="submit" value="upload"/>
+            </div>
+        </form>
+    </section>
+    <footer>
+        <div th:replace="admin/base/footer"/>
+    </footer>
+</body>
+</html>

@@ -14,8 +14,10 @@
                 <div>
                     <span th:text="${menu.nameKor}"></span>
                     <span th:text="${menu.nameEn}"></span>
+                    <span th:text="${menu.price}"></span>
                     <span th:text="${menu.category}"></span>
                     <span th:text="${menu.material}"></span>
+                    <a th:href="'./mainMenu/'+${menu.id}"><button>편집</button></a>
                 </div>
             </li>
         </ul>
