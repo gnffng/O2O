@@ -9,27 +9,54 @@
         <div th:replace="admin/base/header"/>
     </header>
     <section>
-        <form th:action="@{/admin/product/mainMenu}"
+        <form action=""
               method="post"
               enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="put"/>
             <div>
-                <label>제품명(한글) : <input th:value="${menu.nameKor}" type="text" name="nameKor"></label>
-                <label>제품명(영어) : <input th:value="${menu.nameEn}" type="text" name="nameEn"></label>
-                <label>가격 : <input th:value="${menu.price}" type="text" name="price"></label>
-                <label>카테고리 :
-                    <select name="category" th:field="*{menu.category}">
-                        <option th:each="categoryValue : ${T(com.bong.o2o.dao.product.Category).values()}"
-                        th:value="${categoryValue.name()}"
-                        th:text="${categoryValue.name()"}>
-                        </option>
-                    </select>
-                </label>
-                <label>제품구성 : <input th:value="${menu.material}" type="text" name="material"></label>
-                <label>이미지 : <input type="file" name="image" accept="image/png, image/jpeg" /></label>
-                <input type="submit" value="upload"/>
+                <ul>
+                    <li>
+                        <label>
+                            제품명(한글) : <input th:value="${menu.nameKor}" type="text" name="nameKor">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            제품명(영어) : <input th:value="${menu.nameEn}" type="text" name="nameEn">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            가격 : <input th:value="${menu.price}" type="text" name="price">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            카테고리 :
+                            <select name="category" th:field="*{menu.category}">
+                                <option th:each="categoryValue : ${T(com.bong.o2o.dao.product.MainMenu.Category).values()}"
+                                        th:value="${categoryValue.name()}"
+                                        th:text="${categoryValue.name()}">
+                                </option>
+                            </select>
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            제품구성 : <input th:value="${menu.material}" type="text" name="material">
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            이미지 : <input type="file" name="image" accept="image/png, image/jpeg" />
+                        </label>
+                    </li>
+                    <li>
+                        <input type="submit" value="upload"/>
+                    </li>
+                </ul>
             </div>
         </form>
-        <p th:text="${menu.category}"></p>
     </section>
     <footer>
         <div th:replace="admin/base/footer"/>

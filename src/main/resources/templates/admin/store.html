@@ -9,20 +9,30 @@
         <div th:replace="admin/base/header"/>
     </header>
     <section>
-        <form th:action="@{/admin/store}"
+        <h1>Store</h1>
+        <form action=""
               method="post"
               enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="put"/>
             <div>
-                <input type="hidden" name="_method" value="put"/>
-                <img th:src="'/image/store/' + ${store.logoFileName}" src="/image/store/default.png"/>
-                <input type="text" name="name" th:value="${store.name}"/>
-                <label>Photos: </label>
-                <input type="file" name="image" accept="image/png, image/jpeg" />
-                <input type="submit" value="upload"/>
+                <ul>
+                    <li>
+                        <label>name: <input type="text" name="name" th:value="${store.name}"/></label>
+                    </li>
+                    <li>
+                        <label>
+                            <img th:src="'/image/store/' + ${store.logoFileName}" width="100px"/>
+                            Photos: <input type="file" name="image" accept="image/png, image/jpeg" />
+                        </label>
+                    </li>
+                    <li>
+                        <input type="submit" value="upload"/>
+                    </li>
+                </ul>
             </div>
         </form>
 
-        <form th:action="@{/admin/store}"
+        <form action=""
               method="post"
               enctype="multipart/form-data">
             <div>

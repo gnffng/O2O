@@ -44,8 +44,8 @@ public class OrderService {
     }
 
     ////Update
-    public MainMenu updateMenu(MainMenu newMenu) {
-        MainMenu menu = menuRepository.findByNameKor(newMenu.getNameKor()).orElse(new MainMenu());
+    public MainMenu updateMenu(Long id, MainMenu newMenu) {
+        MainMenu menu = menuRepository.findById(id).get();
 
         menu.setCategory(newMenu.getCategory());
         menu.setMaterial(newMenu.getMaterial());
@@ -54,7 +54,7 @@ public class OrderService {
         menu.setPrice(newMenu.getPrice());
         menu.setLogoFileName(newMenu.getLogoFileName());
 
-        return menuRepository.save(newMenu);
+        return menuRepository.save(menu);
     }
 
     ////Delete

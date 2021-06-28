@@ -9,18 +9,21 @@
         <div th:replace="admin/base/header"/>
     </header>
     <section>
+        <h1>Main Menu</h1>
         <ul>
             <li th:each="menu:${menus}">
                 <div>
+                    <span><img th:src="'/image/mainMenu/' + ${menu.logoFileName}" width="100px"/></span>
                     <span th:text="${menu.nameKor}"></span>
                     <span th:text="${menu.nameEn}"></span>
                     <span th:text="${menu.price}"></span>
                     <span th:text="${menu.category}"></span>
                     <span th:text="${menu.material}"></span>
-                    <a th:href="'./mainMenu/'+${menu.id}"><button>편집</button></a>
+                    <a th:href="'./mainMenu/'+${menu.id}+'/'"><button>편집</button></a>
                 </div>
             </li>
         </ul>
+        <h1>Topping</h1>
         <ul>
             <li th:each="topping:${toppings}">
                 <div>

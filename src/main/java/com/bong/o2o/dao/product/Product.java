@@ -8,7 +8,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(unique = true)
     String nameKor;
+
     String nameEn;
     Long price;
 

@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class MainMenu extends Product{
-    enum Category{
+    public enum Category{
         Salady, WarmBowl, Sand, Wrap, WarmWrap;
     }
 

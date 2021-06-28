@@ -92,7 +92,7 @@ public class AdminController {
 
         orderService.createMenu(menu);
 
-        System.out.println("mainMenu redirect!");
+        System.out.println("post mainMenu!");
 
         return "redirect:./";
     }
@@ -104,10 +104,15 @@ public class AdminController {
     }
 
     @PutMapping("/product/mainMenu/{id}")
-    public String editMainMenu(MainMenuForm mainMenuForm) throws IOException {
+    public String editMainMenu(MainMenuForm mainMenuForm, @PathVariable Long id) throws IOException {
         String fileName = StringUtils.cleanPath(mainMenuForm.getImage().getOriginalFilename());
         String uploadDir = "src/main/resources/static/image/mainMenu/";
-        FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
+        try{
+            FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
+        }
+        catch (Exception e){
+            fileName = "default.png";
+        }
 
         MainMenu menu = new MainMenu();
 
@@ -118,11 +123,11 @@ public class AdminController {
         menu.setPrice(mainMenuForm.getPrice());
         menu.setLogoFileName(fileName);
 
-        orderService.createMenu(menu);
+        orderService.updateMenu(id, menu);
 
-        System.out.println("mainMenu redirect!");
+        System.out.println("put mainMenu!");
 
-        return "redirect:mainMenu";
+        return "redirect:../../";
     }
 
     //통계
@@ -143,7 +148,7 @@ public class AdminController {
     @PostMapping("/store")
     public String initProfile(){
         storeService.initStore();
-        return "redirect:store";
+        return "redirect:./";
     }
 
     @PutMapping("/store")
@@ -151,6 +156,13 @@ public class AdminController {
             @RequestParam("name") String name,
             @RequestParam("image") MultipartFile multipartFile) throws IOException {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String uploadDir = "src/main/resources/static/image/store/";
+        try{
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
+        catch (Exception e){
+            fileName = "default.png";
+        }
 
         Store store = new Store();
         store.setName(name);
@@ -159,10 +171,9 @@ public class AdminController {
 
         storeService.updateStore(store);
 
-        String uploadDir = "src/main/resources/static/image/store/";
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-        return "redirect:store";
+
+        return "redirect:./";
     }
 
 }
