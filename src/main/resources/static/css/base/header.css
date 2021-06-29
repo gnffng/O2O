@@ -1,10 +1,11 @@
-.header{
+header{
         width:100%;
         position: fixed;
         top: 0px;
         margin-left: 0px;
         padding: 0px;
         background: cornflowerblue;
+        z-index: 999;
 }
 
 .header > ul{
@@ -38,11 +39,4 @@
 .header > ul > a > li > p{
         margin:0px;
         margin-top:10px;
-}
-
-section{
-        position: fixed;
-        top: 70px;
-        left: 0px;
-        width: 100%;
 }

@@ -4,6 +4,7 @@ import com.bong.o2o.dao.admin.Admin;
 import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.MainMenuForm;
 import com.bong.o2o.dao.product.Topping;
+import com.bong.o2o.dao.product.ToppingForm;
 import com.bong.o2o.dao.store.Store;
 import com.bong.o2o.repository.admin.AdminRepository;
 import com.bong.o2o.service.AdminService;
@@ -79,7 +80,12 @@ public class AdminController {
     public String addMainMenu(MainMenuForm mainMenuForm) throws IOException {
         String fileName = StringUtils.cleanPath(mainMenuForm.getImage().getOriginalFilename());
         String uploadDir = "src/main/resources/static/image/mainMenu/";
-        FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
+        try{
+            FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
+        }
+        catch (Exception e){
+            fileName = "default.png";
+        }
 
         MainMenu menu = new MainMenu();
 
@@ -94,7 +100,7 @@ public class AdminController {
 
         System.out.println("post mainMenu!");
 
-        return "redirect:./";
+        return "redirect:../";
     }
 
     @GetMapping("/product/mainMenu/{id}")
@@ -126,6 +132,83 @@ public class AdminController {
         orderService.updateMenu(id, menu);
 
         System.out.println("put mainMenu!");
+
+        return "redirect:../../";
+    }
+
+    @DeleteMapping("/product/mainMenu/{id}")
+    public String deleteMainMenu(@PathVariable Long id){
+        orderService.deleteMenu(orderService.readMenuById(id).get());
+
+        return "redirect:../../";
+    }
+
+    @GetMapping("/product/topping/")
+    public String addToppingForm(){
+        return "admin/addTopping";
+    }
+
+    @PostMapping("/product/topping/")
+    public String addTopping(ToppingForm toppingForm) throws IOException {
+        String fileName = StringUtils.cleanPath(toppingForm.getImage().getOriginalFilename());
+        String uploadDir = "src/main/resources/static/image/topping/";
+        try{
+            FileUploadUtil.saveFile(uploadDir, fileName, toppingForm.getImage());
+        }
+        catch (Exception e){
+            fileName = "default.png";
+        }
+
+        Topping topping = new Topping();
+
+        topping.setCategory(toppingForm.getCategory());
+        topping.setNameKor(toppingForm.getNameKor());
+        topping.setNameEn(toppingForm.getNameEn());
+        topping.setPrice(toppingForm.getPrice());
+        topping.setLogoFileName(fileName);
+
+        orderService.createTopping(topping);
+
+        System.out.println("post Topping!");
+
+        return "redirect:../";
+    }
+
+    @GetMapping("/product/topping/{id}")
+    public String editToppingForm(Model model, @PathVariable Long id){
+        model.addAttribute("topping", orderService.readToppingById(id).get());
+        return "admin/editTopping";
+    }
+
+    @PutMapping("/product/topping/{id}")
+    public String editTopping(ToppingForm toppingForm, @PathVariable Long id) throws IOException {
+        String fileName = StringUtils.cleanPath(toppingForm.getImage().getOriginalFilename());
+        String uploadDir = "src/main/resources/static/image/topping/";
+        try{
+            FileUploadUtil.saveFile(uploadDir, fileName, toppingForm.getImage());
+        }
+        catch (Exception e){
+            fileName = "default.png";
+        }
+
+        Topping topping = new Topping();
+
+        topping.setCategory(toppingForm.getCategory());
+        topping.setNameKor(toppingForm.getNameKor());
+        topping.setNameEn(toppingForm.getNameEn());
+        topping.setPrice(toppingForm.getPrice());
+        topping.setLogoFileName(fileName);
+
+        orderService.updateTopping(id, topping);
+
+        System.out.println("put Topping!");
+
+        return "redirect:../../";
+    }
+
+    @DeleteMapping("/product/topping/{id}")
+    public String deleteTopping(@PathVariable Long id){
+        orderService.deleteTopping(orderService.readToppingById(id).get());
 
         return "redirect:../../";
     }

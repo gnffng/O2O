@@ -4,11 +4,11 @@ import javax.persistence.Entity;
 
 @Entity
 public class Topping extends Product{
-    enum Category{
-        Main, Sub;
+    public enum Category{
+        Main, Sub, Dressing;
     }
 
-    Topping.Category category;
+    Category category;
 
     public Topping.Category getCategory() {
         return category;

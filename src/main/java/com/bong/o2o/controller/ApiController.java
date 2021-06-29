@@ -52,7 +52,7 @@ public class ApiController {
     @ResponseBody
     public MainMenu deleteMenu(@PathVariable("id") Long id){
         MainMenu mainMenu = orderService.readMenuById(id).orElseThrow(IllegalStateException::new);
-        orderService.delete(mainMenu);
+        orderService.deleteMenu(mainMenu);
 
         return mainMenu;
     }

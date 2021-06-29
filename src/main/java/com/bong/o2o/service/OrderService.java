@@ -58,7 +58,7 @@ public class OrderService {
     }
 
     ////Delete
-    public void delete(MainMenu mainMenu){
+    public void deleteMenu(MainMenu mainMenu){
         menuRepository.findById(mainMenu.getId()).ifPresent(n -> {
             menuRepository.delete(mainMenu);
         });
@@ -91,11 +91,25 @@ public class OrderService {
     public Optional<Topping> readToppingByNameKor(String name){
         return toppingRepository.findByNameKor(name);
     }
+    public Optional<Topping> readToppingById(Long id){
+        return toppingRepository.findById(id);
+    }
 
     //Update
+    public Topping updateTopping(Long id, Topping newMenu) {
+        Topping topping = toppingRepository.findById(id).get();
+
+        topping.setCategory(newMenu.getCategory());
+        topping.setNameKor(newMenu.getNameKor());
+        topping.setNameEn(newMenu.getNameEn());
+        topping.setPrice(newMenu.getPrice());
+        topping.setLogoFileName(newMenu.getLogoFileName());
+
+        return toppingRepository.save(topping);
+    }
 
     //Delete
-    public void delete(Topping topping){
+    public void deleteTopping(Topping topping){
         toppingRepository.findById(topping.getId()).ifPresent(n ->{
             toppingRepository.delete(topping);
         });

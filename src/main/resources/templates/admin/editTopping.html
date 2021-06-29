@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>add menu</title>
+    <title>edit topping</title>
 </head>
 <body>
     <header>
@@ -12,21 +12,29 @@
         <form action=""
               method="post"
               enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="put"/>
             <div>
                 <ul>
                     <li>
-                        <label>제품명(한글) : <input type="text" name="nameKor"></label>
+                        <label>
+                            제품명(한글) : <input th:value="${topping.nameKor}" type="text" name="nameKor">
+                        </label>
                     </li>
                     <li>
-                        <label>제품명(영어) : <input type="text" name="nameEn"></label>
+                        <label>
+                            제품명(영어) : <input th:value="${topping.nameEn}" type="text" name="nameEn">
+                        </label>
                     </li>
                     <li>
-                        <label>가격 : <input type="text" name="price"></label>
+                        <label>
+                            가격 : <input th:value="${topping.price}" type="text" name="price">
+                        </label>
                     </li>
                     <li>
-                        <label>카테고리 :
-                            <select name="category">
-                                <option th:each="categoryValue : ${T(com.bong.o2o.dao.product.MainMenu.Category).values()}"
+                        <label>
+                            카테고리 :
+                            <select name="category" th:field="*{topping.category}">
+                                <option th:each="categoryValue : ${T(com.bong.o2o.dao.product.Topping.Category).values()}"
                                         th:value="${categoryValue.name()}"
                                         th:text="${categoryValue.name()}">
                                 </option>
@@ -34,10 +42,9 @@
                         </label>
                     </li>
                     <li>
-                        <label>제품구성 : <input type="text" name="material"></label>
-                    </li>
-                    <li>
-                        <label>이미지 : <input type="file" name="image" accept="image/png, image/jpeg" /></label>
+                        <label>
+                            이미지 : <input type="file" name="image" accept="image/png, image/jpeg" />
+                        </label>
                     </li>
                     <li>
                         <input type="submit" value="upload"/>

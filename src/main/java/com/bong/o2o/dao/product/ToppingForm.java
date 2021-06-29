@@ -1,9 +1,13 @@
 package com.bong.o2o.dao.product;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ToppingForm {
     String nameKor;
     String nameEn;
     Long price;
+    Topping.Category category;
+    MultipartFile image;
 
     public String getNameKor() {
         return nameKor;
@@ -37,5 +41,11 @@ public class ToppingForm {
         this.category = category;
     }
 
-    Topping.Category category;
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
 }
