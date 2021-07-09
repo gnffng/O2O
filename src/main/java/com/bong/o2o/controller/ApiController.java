@@ -1,8 +1,11 @@
 package com.bong.o2o.controller;
 
+import com.bong.o2o.dao.order.OrderForm;
+import com.bong.o2o.dao.order.OrderSheet;
 import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.MainMenuForm;
 import com.bong.o2o.service.OrderService;
+import com.bong.o2o.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +15,28 @@ import java.util.List;
 @RestController
 public class ApiController {
 
+    ProductService productService;
     OrderService orderService;
 
     @Autowired
-    public ApiController(OrderService orderService) {
+    public ApiController(ProductService productService, OrderService orderService) {
+        this.productService = productService;
         this.orderService = orderService;
+    }
+
+    //Order CRUD
+    @PostMapping("/order")
+    @ResponseBody
+    public OrderForm addOrder(@RequestBody OrderForm orderForm){
+        orderService.createOrder(orderForm);
+        return orderForm;
+    }
+
+    @DeleteMapping("/order/{id}")
+    @ResponseBody
+    public String deleteOrder(@PathVariable Long id){
+        orderService.deleteOrder(id);
+        return "delete OrderSheet(" + id + ")";
     }
 
     //MainMenu CRUD
@@ -30,7 +50,7 @@ public class ApiController {
         newMenu.setCategory(mainMenuForm.getCategory());
         newMenu.setMaterial(mainMenuForm.getMaterial());
 
-        orderService.createMenu(newMenu);
+        productService.createMenu(newMenu);
 
         return newMenu;
     }
@@ -38,21 +58,21 @@ public class ApiController {
     @GetMapping("/main-menu/{id}")
     @ResponseBody
     public MainMenu findMenu(@PathVariable("nameKor") String nameKor){
-        return orderService.readMenuByNameKor(nameKor)
+        return productService.readMenuByNameKor(nameKor)
                 .orElseThrow(IllegalStateException::new);
     }
 
     @GetMapping("/main-menu")
     @ResponseBody
     public List<MainMenu> findMenus(){
-        return orderService.readMenus();
+        return productService.readMenus();
     }
 
     @DeleteMapping("/main-menu/{nameKor}")
     @ResponseBody
     public MainMenu deleteMenu(@PathVariable("id") Long id){
-        MainMenu mainMenu = orderService.readMenuById(id).orElseThrow(IllegalStateException::new);
-        orderService.deleteMenu(mainMenu);
+        MainMenu mainMenu = productService.readMenuById(id).orElseThrow(IllegalStateException::new);
+        productService.deleteMenu(mainMenu);
 
         return mainMenu;
     }

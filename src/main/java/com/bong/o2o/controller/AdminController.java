@@ -1,14 +1,15 @@
 package com.bong.o2o.controller;
 
 import com.bong.o2o.dao.admin.Admin;
+import com.bong.o2o.dao.order.OrderSheet;
 import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.MainMenuForm;
 import com.bong.o2o.dao.product.Topping;
 import com.bong.o2o.dao.product.ToppingForm;
 import com.bong.o2o.dao.store.Store;
-import com.bong.o2o.repository.admin.AdminRepository;
 import com.bong.o2o.service.AdminService;
 import com.bong.o2o.service.OrderService;
+import com.bong.o2o.service.ProductService;
 import com.bong.o2o.service.StoreService;
 import com.bong.o2o.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class AdminController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    ProductService productService;
+
     //로그인
     @GetMapping("/login")
     public String login(){
@@ -55,15 +59,41 @@ public class AdminController {
 
     //주문
     @GetMapping("/order")
-    public String main(){
+    public String order(Model model){
+        List<OrderSheet> orders = orderService.readAll();
+        model.addAttribute("orders", orders);
+
         return "admin/order";
+    }
+
+    @DeleteMapping("/order/{id}")
+    public String deleteOrder(@PathVariable Long id){
+        orderService.deleteOrder(id);
+        return "redirect:../";
+    }
+
+    @GetMapping("/order/{id}")
+    public String editOrderForm(Model model, @PathVariable Long id){
+        OrderSheet orderSheet = orderService.readById(id).get();
+        model.addAttribute("order", orderSheet);
+
+        return "admin/editOrder";
+    }
+
+    @PutMapping("/order/{id}")
+    public String putOrder(OrderSheet.Status status, @PathVariable Long id){
+        OrderSheet orderSheet = orderService.readById(id).get();
+        orderSheet.setStatus(status);
+        orderService.update(orderSheet);
+
+        return "redirect:../";
     }
 
     //상품
     @GetMapping("/product")
     public String product(Model model){
-        List<MainMenu> menus = orderService.readMenus();
-        List<Topping> toppings = orderService.readToppings();
+        List<MainMenu> menus = productService.readMenus();
+        List<Topping> toppings = productService.readToppings();
 
         model.addAttribute("menus", menus);
         model.addAttribute("toppings",toppings);
@@ -96,7 +126,7 @@ public class AdminController {
         menu.setPrice(mainMenuForm.getPrice());
         menu.setLogoFileName(fileName);
 
-        orderService.createMenu(menu);
+        productService.createMenu(menu);
 
         System.out.println("post mainMenu!");
 
@@ -105,7 +135,7 @@ public class AdminController {
 
     @GetMapping("/product/mainMenu/{id}")
     public String editMainMenuForm(Model model, @PathVariable Long id){
-        model.addAttribute("menu", orderService.readMenuById(id).get());
+        model.addAttribute("menu", productService.readMenuById(id).get());
         return "admin/editMainMenu";
     }
 
@@ -129,7 +159,7 @@ public class AdminController {
         menu.setPrice(mainMenuForm.getPrice());
         menu.setLogoFileName(fileName);
 
-        orderService.updateMenu(id, menu);
+        productService.updateMenu(id, menu);
 
         System.out.println("put mainMenu!");
 
@@ -138,7 +168,7 @@ public class AdminController {
 
     @DeleteMapping("/product/mainMenu/{id}")
     public String deleteMainMenu(@PathVariable Long id){
-        orderService.deleteMenu(orderService.readMenuById(id).get());
+        productService.deleteMenu(productService.readMenuById(id).get());
 
         return "redirect:../../";
     }
@@ -167,7 +197,7 @@ public class AdminController {
         topping.setPrice(toppingForm.getPrice());
         topping.setLogoFileName(fileName);
 
-        orderService.createTopping(topping);
+        productService.createTopping(topping);
 
         System.out.println("post Topping!");
 
@@ -176,7 +206,7 @@ public class AdminController {
 
     @GetMapping("/product/topping/{id}")
     public String editToppingForm(Model model, @PathVariable Long id){
-        model.addAttribute("topping", orderService.readToppingById(id).get());
+        model.addAttribute("topping", productService.readToppingById(id).get());
         return "admin/editTopping";
     }
 
@@ -199,7 +229,7 @@ public class AdminController {
         topping.setPrice(toppingForm.getPrice());
         topping.setLogoFileName(fileName);
 
-        orderService.updateTopping(id, topping);
+        productService.updateTopping(id, topping);
 
         System.out.println("put Topping!");
 
@@ -208,7 +238,7 @@ public class AdminController {
 
     @DeleteMapping("/product/topping/{id}")
     public String deleteTopping(@PathVariable Long id){
-        orderService.deleteTopping(orderService.readToppingById(id).get());
+        productService.deleteTopping(productService.readToppingById(id).get());
 
         return "redirect:../../";
     }

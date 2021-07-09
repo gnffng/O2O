@@ -3,12 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>주문</title>
-</head>
+    <link th:href="@{/css/order.css}" rel="stylesheet"/>
 <body>
     <header>
         <div th:replace="admin/base/header"/>
     </header>
-    <section></section>
+    <section>
+        <h1>Order</h1>
+        <ul>
+            <li th:each="order:${orders}">
+                <div>
+                    <span th:text="${order.id}"></span>
+                    <span th:text="${order.amount}"></span>
+                    <span th:text="${order.status}"></span>
+                    <a th:href="'./'+${order.id}+'/'"><button>수정</button></a>
+                    <form th:action="'./'+${order.id}+'/'"
+                          method="post"
+                          enctype="multipart/form-data"
+                          class="delete">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" value="삭제"/>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </section>
     <footer>
         <div th:replace="admin/base/footer"/>
     </footer>

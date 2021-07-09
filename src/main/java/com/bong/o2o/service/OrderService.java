@@ -1,128 +1,105 @@
 package com.bong.o2o.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import com.bong.o2o.dao.order.*;
 import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.Topping;
-import com.bong.o2o.dao.store.Store;
+import com.bong.o2o.repository.order.OrderMenuRepository;
+import com.bong.o2o.repository.order.OrderSheetRepository;
+import com.bong.o2o.repository.order.OrderToppingRepository;
 import com.bong.o2o.repository.product.MenuRepository;
 import com.bong.o2o.repository.product.ToppingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class OrderService {
-    private final MenuRepository menuRepository;
-    private final ToppingRepository toppingRepository;
+    OrderSheetRepository orderSheetRepository;
+    OrderMenuRepository orderMenuRepository;
+    OrderToppingRepository orderToppingRepository;
+    MenuRepository menuRepository;
+    ToppingRepository toppingRepository;
 
-    @Autowired
-    public OrderService(MenuRepository menuRepository,ToppingRepository toppingRepository) {
+    public OrderService(OrderSheetRepository orderSheetRepository,
+                        OrderMenuRepository orderMenuRepository,
+                        OrderToppingRepository orderToppingRepository,
+                        MenuRepository menuRepository,
+                        ToppingRepository toppingRepository) {
+        this.orderSheetRepository = orderSheetRepository;
+        this.orderMenuRepository = orderMenuRepository;
+        this.orderToppingRepository = orderToppingRepository;
         this.menuRepository = menuRepository;
         this.toppingRepository = toppingRepository;
     }
 
-    //Menu Service
+    public OrderSheet createOrder(OrderForm orderForm) {
+        OrderSheet orderSheet = new OrderSheet();
+        orderSheet = orderSheetRepository.save(orderSheet);
 
-    ////Create
-    public Long createMenu(MainMenu mainMenu) {
-        validateDuplicateMenu(mainMenu);
-        menuRepository.save(mainMenu);
-        return mainMenu.getId();
+        Long amount = 0L;
+
+        List<OrderMenu> orderMenus = new ArrayList<>();
+        for(OrderMenuForm orderMenuForm : orderForm.getOrderMenuForms()){
+            OrderMenu orderMenu = new OrderMenu();
+            orderMenu.setOrderSheet(orderSheet);
+            orderMenu = orderMenuRepository.save(orderMenu);
+
+            MainMenu mainMenu = menuRepository.findById(orderMenuForm.getIdMainMenu()).get();
+            orderMenu.setMainMenu(mainMenu);
+
+            Long price = mainMenu.getPrice();
+
+            List<OrderTopping> orderToppings = new ArrayList<>();
+            for(OrderToppingForm orderToppingForm : orderMenuForm.getOrderToppingForms()){
+                OrderTopping orderTopping = new OrderTopping();
+                orderTopping.setOrderMenu(orderMenu);
+
+                Topping topping = toppingRepository.findById(orderToppingForm.getIdTopping()).get();
+
+                orderTopping.setTopping(topping);
+                orderTopping.setCount(orderToppingForm.getCount());
+
+                orderTopping.setAmount(topping.getPrice() * orderToppingForm.getCount());
+                price += orderTopping.getAmount();
+
+                orderToppingRepository.save(orderTopping);
+            }
+
+            amount += price;
+            orderMenu.setAmount(price);
+
+            orderMenus.add(orderMenu);
+            orderMenu = orderMenuRepository.save(orderMenu);
+        }
+
+        orderSheet.setAmount(amount);
+        orderSheet.setStatus(OrderSheet.Status.Preparing);
+        orderSheet.setOrderMenus(orderMenus);
+        return orderSheetRepository.save(orderSheet);
     }
 
-    ////Read
-    public List<MainMenu> readMenus(){
-        return menuRepository.findAll();
+    public Optional<OrderSheet> readById(Long id){
+        return orderSheetRepository.findById(id);
     }
 
-    public Optional<MainMenu> readMenuByNameKor(String name){
-        return menuRepository.findByNameKor(name);
-    }
-    public Optional<MainMenu> readMenuById(Long id){
-        return menuRepository.findById(id);
+    public List<OrderSheet> readAll(){
+        return orderSheetRepository.findAll();
     }
 
-    ////Update
-    public MainMenu updateMenu(Long id, MainMenu newMenu) {
-        MainMenu menu = menuRepository.findById(id).get();
-
-        menu.setCategory(newMenu.getCategory());
-        menu.setMaterial(newMenu.getMaterial());
-        menu.setNameKor(newMenu.getNameKor());
-        menu.setNameEn(newMenu.getNameEn());
-        menu.setPrice(newMenu.getPrice());
-        menu.setLogoFileName(newMenu.getLogoFileName());
-
-        return menuRepository.save(menu);
+    public OrderSheet update(OrderSheet orderSheet){
+        return orderSheetRepository.save(orderSheet);
     }
 
-    ////Delete
-    public void deleteMenu(MainMenu mainMenu){
-        menuRepository.findById(mainMenu.getId()).ifPresent(n -> {
-            menuRepository.delete(mainMenu);
-        });
-    }
+    public void deleteOrder(Long id){
+        OrderSheet orderSheet = orderSheetRepository.findById(id).get();
 
-    ////Etc
-    public void validateDuplicateMenu(MainMenu mainMenu){
-        menuRepository.findByNameKor(mainMenu.getNameKor()).ifPresent(n ->{
-            throw new IllegalStateException("이미 있는 메뉴입니다(한글이름 중복)");
-        });
+        for(OrderMenu orderMenu : orderMenuRepository.findByOrderSheet(orderSheet)){
+            for(OrderTopping orderTopping : orderToppingRepository.findByOrderMenu(orderMenu)){
+                orderToppingRepository.delete(orderTopping);
+            }
+            orderMenuRepository.delete(orderMenu);
+        }
 
-        menuRepository.findByNameEn(mainMenu.getNameKor()).ifPresent(n ->{
-            throw new IllegalStateException("이미 있는 메뉴입니다(영어이름 중복)");
-        });
-    }
-
-    //Topping Service
-    //Create
-    public Long createTopping(Topping topping){
-        validateDuplicateTopping(topping);
-        toppingRepository.save(topping);
-        return topping.getId();
-    }
-
-    //Read
-    public List<Topping> readToppings(){
-        return toppingRepository.findAll();
-    }
-
-    public Optional<Topping> readToppingByNameKor(String name){
-        return toppingRepository.findByNameKor(name);
-    }
-    public Optional<Topping> readToppingById(Long id){
-        return toppingRepository.findById(id);
-    }
-
-    //Update
-    public Topping updateTopping(Long id, Topping newMenu) {
-        Topping topping = toppingRepository.findById(id).get();
-
-        topping.setCategory(newMenu.getCategory());
-        topping.setNameKor(newMenu.getNameKor());
-        topping.setNameEn(newMenu.getNameEn());
-        topping.setPrice(newMenu.getPrice());
-        topping.setLogoFileName(newMenu.getLogoFileName());
-
-        return toppingRepository.save(topping);
-    }
-
-    //Delete
-    public void deleteTopping(Topping topping){
-        toppingRepository.findById(topping.getId()).ifPresent(n ->{
-            toppingRepository.delete(topping);
-        });
-    }
-
-    //Etc
-    public void validateDuplicateTopping(Topping topping){
-        toppingRepository.findByNameKor(topping.getNameKor()).ifPresent(n ->{
-            throw new IllegalStateException("이미 있는 메뉴입니다(한글이름 중복)");
-        });
-
-        toppingRepository.findByNameEn(topping.getNameKor()).ifPresent(n ->{
-            throw new IllegalStateException("이미 있는 메뉴입니다(영어이름 중복)");
-        });
+        orderSheetRepository.delete(orderSheet);
     }
 }
