@@ -1,5 +1,8 @@
+Spring Boot와 Android Application을 이용한 주문관리 시스템입니다.<br><br>
+
+<br>
 [Back-End]<br>
-1. spring boot를 이용하여 음식점의 주문 서버 시스템을 Restful Api 서버로 개발한다.<br>
+1. Spring Boot를 이용하여 음식점의 주문 서버 시스템을 Restful Api 서버로 개발한다.<br>
 2. 가게의 정보, 음식의 정보, 토핑의 정보, 주문 정보를 CRUD 할 수 있는 관리자 페이지를 제공한다.<br>
 <br>
 [Front-End]<br>
