@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>로그인페이지</title>
@@ -7,13 +8,19 @@
 <body>
     <header></header>
     <section>
-        <form action="http://localhost:8080/admin/login" method="post">
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <form th:action="@{./login}" method="post">
             <ul>
                 <li>
-                    <input type="text" id="id" name="id"/>
+                    <input type="text" name="username"/>
                 </li>
                 <li>
-                    <input type="password" id="pw" name="passward"/>
+                    <input type="password" name="password"/>
                 </li>
                 <li>
                     <input type="submit" value="로그인">

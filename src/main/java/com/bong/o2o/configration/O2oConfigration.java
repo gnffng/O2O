@@ -1,4 +1,4 @@
-package com.bong.o2o;
+package com.bong.o2o.configration;
 
 import com.bong.o2o.aop.CheckPost;
 import com.bong.o2o.repository.admin.AdminRepository;

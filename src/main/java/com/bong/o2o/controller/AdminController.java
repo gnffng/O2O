@@ -45,17 +45,17 @@ public class AdminController {
         return "admin/login";
     }
 
-    @PostMapping("/login")
-    public String login(Admin admin){
-        Boolean isSuccese = adminService.longin(admin);
-
-        if(isSuccese){
-            return "redirect:order";
-        }
-        else{
-            return "redirect:login";
-        }
-    }
+//    @PostMapping("/login")
+//    public String login(Admin admin){
+//        Boolean isSuccese = adminService.longin(admin);
+//
+//        if(isSuccese){
+//            return "redirect:order";
+//        }
+//        else{
+//            return "redirect:login";
+//        }
+//    }l
 
     //주문
     @GetMapping("/order")
