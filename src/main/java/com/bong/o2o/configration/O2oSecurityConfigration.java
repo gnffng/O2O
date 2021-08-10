@@ -21,8 +21,17 @@ public class O2oSecurityConfigration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        String[] staticResources  =  {
+                "/css/**",
+                "/image/**",
+                "/",
+                "/api"
+        };
+
         http.authorizeRequests()
-                .antMatchers("/", "/api").permitAll()
+
+                .antMatchers(staticResources).permitAll()
                     .anyRequest().authenticated()
                     .and()
 

@@ -1,35 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>로그인페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 </head>
 <body>
-    <header></header>
-    <section>
-        <div th:if="${param.error}">
-            Invalid username and password.
+<div class="container-fluid text-center" style="margin-top:100px">
+    <div>
+        <img th:src="@{/image/store/salady.jpg}" style="min-width: 250px; max-width: 350px;">
+    </div>
+    <form th:action="@{/admin/login}" method="post" style="display:inline-block; max-width:500px; marin: 0 auto;">
+        <div class="border border-secondary p-3 rounded">
+            <p>관리자 계정을 입력하십시오.</p>
+            <p>
+                <input type="text" name="username" class="form-control" placeholder="Username" required autofocus/>
+            </p>
+            <p>
+                <input type="password" name="password" class="form-control" placeholder="Password" required />
+            </p>
+            <p>
+                <input type="submit" value="로그인" class="btn btn-primary" />
+            </p>
         </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <form th:action="@{./login}" method="post">
-            <ul>
-                <li>
-                    <input type="text" name="username"/>
-                </li>
-                <li>
-                    <input type="password" name="password"/>
-                </li>
-                <li>
-                    <input type="submit" value="로그인">
-                </li>
-            </ul>
-        </form>
-    </section>
-    <footer>
-        <div th:replace="admin/base/footer"/>
-    </footer>
+    </form>
+</div>
 </body>
 </html>

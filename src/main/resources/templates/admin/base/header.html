@@ -1,29 +1,16 @@
 <link th:href="@{/css/base/header.css}" rel="stylesheet"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
-<div class="header">
-    <ul>
-        <a href="/admin/order/">
-            <li>
-                <p>주문</p>
-            </li>
-        </a>
-        <a href="/admin/product/">
-            <li>
-                <p>상품</p>
-            </li>
-        </a>
-        <a href="/admin/statistic/">
-            <li>
-                <p>통계</p>
-            </li>
-        </a>
-        <a href="/admin/store/">
-            <li>
-                <p>가게</p>
-            </li>
-        </a>
-    </ul>
+<div class="menu-bar">
+    <a th:if="${active=='order'}" class="active" href="/admin/order/"><i class="fa fa-fw fa-truck"></i> 주문</a>
+    <a th:unless="${active=='order'}" href="/admin/order/"><i class="fa fa-fw fa-truck"></i> 주문</a>
+    <a th:if="${active=='product'}" class="active" href="/admin/product/"><i class="fa fa-fw fa-archive"></i> 상품</a>
+    <a th:unless="${active=='product'}" href="/admin/product/"><i class="fa fa-fw fa-archive"></i> 상품</a>
+    <a th:if="${active=='statistic'}" class="active" href="/admin/statistic/"><i class="fa fa-fw fa-chart-pie"></i> 통계</a>
+    <a th:unless="${active=='statistic'}" href="/admin/statistic/"><i class="fa fa-fw fa-chart-pie"></i> 통계</a>
+    <a th:if="${active=='store'}" class="active" href="/admin/store/"><i class="fa fa-fw fa-home"></i> 가게</a>
+    <a th:unless="${active=='store'}" href="/admin/store/"><i class="fa fa-fw fa-home"></i> 가게</a>
     <form th:action="@{/logout}" method="post" class="logout">
-        <input type="submit" value="Sign Out"/>
+        <a onclick="document.getElementsByClassName('logout')[0].submit();"><i class="fa fa-fw fa-home"></i> 로그아웃</a>
     </form>
 </div>
