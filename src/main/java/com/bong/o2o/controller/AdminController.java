@@ -12,20 +12,26 @@ import com.bong.o2o.service.OrderService;
 import com.bong.o2o.service.ProductService;
 import com.bong.o2o.service.StoreService;
 import com.bong.o2o.util.FileUploadUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
@@ -42,15 +48,27 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    //테스트용 admin계정 생성
+//    @GetMapping("/signUp")
+//    public String signUp(){
+//        Admin admin = Admin.builder()
+//                .id("admin")
+//                .password(passwordEncoder.encode("123"))
+//                .role("admin")
+//                .build();
+//
+//        adminService.create(admin);
+//
+//        return "redirect:/admin/login";
+//    }
+
     //로그인
     @GetMapping("/login")
     public String login(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
-            return "admin/login";
-        }
-
-        return "redirect:/";
+        return "admin/login";
     }
 
 //    @PostMapping("/login")
@@ -271,6 +289,7 @@ public class AdminController {
     public String store(Model model){
         Store store = storeService.readStore();
         model.addAttribute("store", store);
+//        model.addAttribute("fileName", store.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png");
         model.addAttribute("active", "store");
         return "admin/store";
     }
@@ -287,19 +306,20 @@ public class AdminController {
             @RequestParam("name") String name,
             @RequestParam("image") MultipartFile multipartFile,
             Model model) throws IOException {
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
         String uploadDir = "src/main/resources/static/image/store/";
-        try{
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        }
-        catch (Exception e){
-            fileName = "default.png";
-        }
 
         Store store = new Store();
         store.setName(name);
-        store.setLogoFileName(fileName);
-        store.setUpdatedTimeAt(LocalDateTime.now());
+        store.setLogoFileName(store.getUpdatedTimeAt().toString());
+
+        try{
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(uploadDir, store.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png"));
+        }
+        catch (Exception e){
+            store.setLogoFileName("default.png");
+            log.info(e.toString());
+        }
 
         storeService.updateStore(store);
         model.addAttribute("active", "store");

@@ -9,27 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminService {
 
     AdminRepository adminRepository;
-    @Autowired
 
+    @Autowired
     public AdminService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
     }
 
-    public boolean longin(Admin adminForm){
-        try {
-            Admin admin = adminRepository.findById(adminForm.getId()).orElseThrow(IllegalStateException::new);
-
-            if(admin.getPassward().equals(adminForm.getPassward())){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        catch(Exception e){
-            return false;
-        }
-
-
+    public void create(Admin admin){
+        adminRepository.save(admin);
     }
 }

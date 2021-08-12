@@ -20,6 +20,7 @@ public class Store {
 
     public Store() {
         createdTimeAt = LocalDateTime.now();
+        updatedTimeAt = LocalDateTime.now();
     }
 
     public long getId() {

@@ -6,6 +6,7 @@ import com.bong.o2o.repository.store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional
@@ -27,19 +28,20 @@ public class StoreService {
         }
         else{
             store = storeRepository.findAll().get(0);
+            store.setUpdatedTimeAt(LocalDateTime.now());
         }
 
         store.setName("default");
-        store.setLogoFileName("default.png");
-
-        storeRepository.save(store);
+        store.setLogoFileName(store.getUpdatedTimeAt().toString());
+        store = storeRepository.save(store);
     }
 
     public Store updateStore(Store newStore) {
         Store store = storeRepository.findAll().get(0);
 
         store.setName(newStore.getName());
-        store.setLogoFileName(newStore.getLogoFileName());
+        store.setUpdatedTimeAt(newStore.getUpdatedTimeAt());
+        store.setLogoFileName(newStore.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png");
 
         return storeRepository.save(store);
     }
