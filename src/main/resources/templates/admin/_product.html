@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>상품</title>
+    <link th:href="@{/css/product.css}" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <div th:replace="admin/base/header"/>
+    </header>
+    <section>
+        <h1>Main Menu <a href="./mainMenu/"><button>추가</button></a></h1>
+        <ul>
+            <li th:each="menu:${menus}">
+                <div>
+                    <span><img th:src="'/image/mainMenu/' + ${menu.logoFileName}" width="100px"/></span>
+                    <span th:text="${menu.nameKor}"></span>
+                    <span th:text="${menu.nameEn}"></span>
+                    <span th:text="${menu.price}"></span>
+                    <span th:text="${menu.category}"></span>
+                    <span th:text="${menu.material}"></span>
+                    <a th:href="'./mainMenu/'+${menu.id}+'/'"><button>수정</button></a>
+                    <form th:action="'./mainMenu/'+${menu.id}+'/'"
+                          method="post"
+                          enctype="multipart/form-data"
+                          class="delete">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" value="삭제"/>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        <h1>Topping <a href="./topping/"><button>추가</button></a></h1>
+        <ul>
+            <li th:each="topping:${toppings}">
+                <div>
+                    <span><img th:src="'/image/topping/' + ${topping.logoFileName}" width="100px"/></span>
+                    <span th:text="${topping.nameKor}"></span>
+                    <span th:text="${topping.nameEn}"></span>
+                    <span th:text="${topping.price}"></span>
+                    <span th:text="${topping.category}"></span>
+                    <a th:href="'./topping/'+${topping.id}+'/'"><button>수정</button></a>
+                    <form th:action="'./topping/'+${topping.id}+'/'"
+                          method="post"
+                          enctype="multipart/form-data"
+                          class="delete">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <input type="submit" value="삭제"/>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <footer>
+        <div th:replace="admin/base/footer"/>
+    </footer>
+</body>
+</html>

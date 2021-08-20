@@ -57,7 +57,7 @@ public class AdminController {
 //        Admin admin = Admin.builder()
 //                .id("admin")
 //                .password(passwordEncoder.encode("123"))
-//                .role("admin")
+//                .role("role_admin")
 //                .build();
 //
 //        adminService.create(admin);
@@ -67,21 +67,13 @@ public class AdminController {
 
     //로그인
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model){
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
+        model.addAttribute("active", "store");
+
         return "admin/login";
     }
-
-//    @PostMapping("/login")
-//    public String login(Admin admin){
-//        Boolean isSuccese = adminService.longin(admin);
-//
-//        if(isSuccese){
-//            return "redirect:order";
-//        }
-//        else{
-//            return "redirect:login";
-//        }
-//    }l
 
     //주문
     @GetMapping("/order")
@@ -289,7 +281,6 @@ public class AdminController {
     public String store(Model model){
         Store store = storeService.readStore();
         model.addAttribute("store", store);
-//        model.addAttribute("fileName", store.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png");
         model.addAttribute("active", "store");
         return "admin/store";
     }
