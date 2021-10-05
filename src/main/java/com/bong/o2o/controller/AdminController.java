@@ -205,22 +205,25 @@ public class AdminController {
 
     @PostMapping("/product/topping/")
     public String addTopping(ToppingForm toppingForm, Model model) throws IOException {
-        String fileName = StringUtils.cleanPath(toppingForm.getImage().getOriginalFilename());
-        String uploadDir = "src/main/resources/static/image/topping/";
-        try{
-            FileUploadUtil.saveFile(uploadDir, fileName, toppingForm.getImage());
-        }
-        catch (Exception e){
-            fileName = "default.png";
-        }
-
         Topping topping = new Topping();
 
         topping.setCategory(toppingForm.getCategory());
         topping.setNameKor(toppingForm.getNameKor());
         topping.setNameEn(toppingForm.getNameEn());
         topping.setPrice(toppingForm.getPrice());
+
+        String uploadDir = "src/main/resources/static/image/topping/";
+        String fileName = topping.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png";
+
         topping.setLogoFileName(fileName);
+
+        try{
+            FileCopyUtils.copy(toppingForm.getImage().getBytes(), new File(uploadDir, fileName));
+        }
+        catch (Exception e){
+            topping.setLogoFileName("default.png");
+            log.info(e.toString());
+        }
 
         productService.createTopping(topping);
         model.addAttribute("active", "product");
@@ -228,7 +231,7 @@ public class AdminController {
         return "redirect:../";
     }
 
-    @GetMapping("/product/topping/{id}")
+    @GetMapping("/product/topping/{id}/")
     public String editToppingForm(@PathVariable Long id, Model model){
         model.addAttribute("topping", productService.readToppingById(id).get());
         model.addAttribute("active", "product");
@@ -237,22 +240,25 @@ public class AdminController {
 
     @PutMapping("/product/topping/{id}")
     public String editTopping(@PathVariable Long id, ToppingForm toppingForm, Model model) throws IOException {
-        String fileName = StringUtils.cleanPath(toppingForm.getImage().getOriginalFilename());
-        String uploadDir = "src/main/resources/static/image/topping/";
-        try{
-            FileUploadUtil.saveFile(uploadDir, fileName, toppingForm.getImage());
-        }
-        catch (Exception e){
-            fileName = "default.png";
-        }
-
         Topping topping = new Topping();
 
         topping.setCategory(toppingForm.getCategory());
         topping.setNameKor(toppingForm.getNameKor());
         topping.setNameEn(toppingForm.getNameEn());
         topping.setPrice(toppingForm.getPrice());
+
+        String uploadDir = "src/main/resources/static/image/topping/";
+        String fileName = topping.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png";
+
         topping.setLogoFileName(fileName);
+
+        try{
+            FileCopyUtils.copy(toppingForm.getImage().getBytes(), new File(uploadDir, fileName));
+        }
+        catch (Exception e){
+            topping.setLogoFileName("default.png");
+            log.info(e.toString());
+        }
 
         productService.updateTopping(id, topping);
         model.addAttribute("active", "product");
@@ -302,7 +308,7 @@ public class AdminController {
 
         Store store = new Store();
         store.setName(name);
-        store.setLogoFileName(store.getUpdatedTimeAt().toString());
+        store.setLogoFileName(store.getUpdatedTimeAt().toString() + "png");
 
         try{
             FileCopyUtils.copy(multipartFile.getBytes(), new File(uploadDir, store.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png"));

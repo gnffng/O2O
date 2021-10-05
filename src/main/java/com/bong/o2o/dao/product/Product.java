@@ -1,6 +1,7 @@
 package com.bong.o2o.dao.product;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class Product {
@@ -16,6 +17,14 @@ public class Product {
 
     @Column(nullable = true, length = 64)
     String logoFileName;
+
+    LocalDateTime createdTimeAt;
+    LocalDateTime updatedTimeAt;
+
+    public Product() {
+        this.createdTimeAt = LocalDateTime.now();
+        this.updatedTimeAt = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -55,5 +64,21 @@ public class Product {
 
     public void setLogoFileName(String logoFileName) {
         this.logoFileName = logoFileName;
+    }
+
+    public LocalDateTime getCreatedTimeAt() {
+        return createdTimeAt;
+    }
+
+    public void setCreatedTimeAt(LocalDateTime createdTimeAt) {
+        this.createdTimeAt = createdTimeAt;
+    }
+
+    public LocalDateTime getUpdatedTimeAt() {
+        return updatedTimeAt;
+    }
+
+    public void setUpdatedTimeAt(LocalDateTime updatedTimeAt) {
+        this.updatedTimeAt = updatedTimeAt;
     }
 }

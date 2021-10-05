@@ -10,6 +10,10 @@ public class Topping extends Product{
 
     Category category;
 
+    public Topping() {
+        super();
+    }
+
     public Topping.Category getCategory() {
         return category;
     }

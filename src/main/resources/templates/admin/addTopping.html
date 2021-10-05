@@ -1,48 +1,119 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>add topping</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">-->
+
+    <title>Add Topping</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="/bootstrap/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div th:replace="admin/base/header"/>
-</header>
-<section>
-    <form action=""
-          method="post"
-          enctype="multipart/form-data">
-        <div>
-            <ul>
-                <li>
-                    <label>제품명(한글) : <input type="text" name="nameKor"></label>
-                </li>
-                <li>
-                    <label>제품명(영어) : <input type="text" name="nameEn"></label>
-                </li>
-                <li>
-                    <label>가격 : <input type="text" name="price"></label>
-                </li>
-                <li>
-                    <label>카테고리 :
-                        <select name="category">
-                            <option th:each="categoryValue : ${T(com.bong.o2o.dao.product.Topping.Category).values()}"
-                                    th:value="${categoryValue.name()}"
-                                    th:text="${categoryValue.name()}">
-                            </option>
-                        </select>
-                    </label>
-                </li>
-                <li>
-                    <label>이미지 : <input type="file" name="image" accept="image/png, image/jpeg" /></label>
-                </li>
-                <li>
-                    <input type="submit" value="upload"/>
-                </li>
-            </ul>
-        </div>
-    </form>
-</section>
+<nav>
+    <div th:replace="admin/base/nav"/>
+</nav>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <aside>
+            <div th:replace="admin/base/aside"/>
+        </aside>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                <h1 class="h2">Add Topping</h1>
+            </div>
+
+            <form class="needs-validation"
+                  action=""
+                  method="post"
+                  enctype="multipart/form-data">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <label for="nameKor" class="form-label">Korean Name</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="nameKor" name="nameKor" placeholder="Korean Name" required="">
+                            <div class="invalid-feedback">
+                                menu's korean name is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="nameEn" class="form-label">English Name</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="nameEn" name="nameEn" placeholder="English Name" required="">
+                            <div class="invalid-feedback">
+                                menu's english name is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="price" class="form-label">Price</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Price" required="">
+                            <div class="invalid-feedback">
+                                menu's price name is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="category" class="form-label">Category</label>
+                        <div class="input-group has-validation">
+                            <select id="category" name="category" class="form-select">
+                                <option th:each="categoryValue : ${T(com.bong.o2o.dao.product.Topping.Category).values()}"
+                                        th:value="${categoryValue.name()}"
+                                        th:text="${categoryValue.name()}">
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">
+                                menu's category name is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="image" class="form-label">Logo</label>
+                        <div class="input-group has-validation">
+                            <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg" />
+                            <div class="invalid-feedback">
+                                Please enter a valid logo image.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Update</button>
+            </form>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>
+            window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+    </script>
+<script src="/bootstrap/assets/js/vendor/popper.min.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+        feather.replace()
+</script>
+
 <footer>
     <div th:replace="admin/base/footer"/>
 </footer>
