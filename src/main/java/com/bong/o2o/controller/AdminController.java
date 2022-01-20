@@ -52,18 +52,18 @@ public class AdminController {
     PasswordEncoder passwordEncoder;
 
     //테스트용 admin계정 생성
-//    @GetMapping("/signUp")
-//    public String signUp(){
-//        Admin admin = Admin.builder()
-//                .id("admin")
-//                .password(passwordEncoder.encode("123"))
-//                .role("role_admin")
-//                .build();
-//
-//        adminService.create(admin);
-//
-//        return "redirect:/admin/login";
-//    }
+    @GetMapping("/signUp")
+    public String signUp(){
+        Admin admin = Admin.builder()
+                .id("admin")
+                .password(passwordEncoder.encode("123"))
+                .role("ROLE_ADMIN")
+                .build();
+
+        adminService.create(admin);
+
+        return "redirect:/admin/login";
+    }
 
     //로그인
     @GetMapping("/login")
@@ -131,26 +131,28 @@ public class AdminController {
 
     @PostMapping("/product/mainMenu")
     public String addMainMenu(MainMenuForm mainMenuForm, Model model) throws IOException {
-        String fileName = StringUtils.cleanPath(mainMenuForm.getImage().getOriginalFilename());
+        MainMenu mainMenu = new MainMenu();
+
+        mainMenu.setCategory(mainMenuForm.getCategory());
+        mainMenu.setNameKor(mainMenuForm.getNameKor());
+        mainMenu.setNameEn(mainMenuForm.getNameEn());
+        mainMenu.setPrice(mainMenuForm.getPrice());
+        mainMenu.setMaterial(mainMenuForm.getMaterial());
+
         String uploadDir = "src/main/resources/static/image/mainMenu/";
+        String fileName = mainMenu.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png";
+
+        mainMenu.setLogoFileName(fileName);
+
         try{
-            FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
+            FileCopyUtils.copy(mainMenuForm.getImage().getBytes(), new File(uploadDir, fileName));
         }
         catch (Exception e){
-            fileName = "default.png";
+            mainMenu.setLogoFileName("default.png");
+            log.info(e.toString());
         }
 
-        MainMenu menu = new MainMenu();
-
-        menu.setCategory(mainMenuForm.getCategory());
-        menu.setMaterial(mainMenuForm.getMaterial());
-        menu.setNameKor(mainMenuForm.getNameKor());
-        menu.setNameEn(mainMenuForm.getNameEn());
-        menu.setPrice(mainMenuForm.getPrice());
-        menu.setLogoFileName(fileName);
-
-        productService.createMenu(menu);
-
+        productService.createMenu(mainMenu);
         model.addAttribute("active", "product");
 
         return "redirect:../";

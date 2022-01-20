@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     @Column(unique = true)
