@@ -14,6 +14,7 @@ import com.bong.o2o.service.StoreService;
 import com.bong.o2o.util.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -130,7 +131,9 @@ public class AdminController {
     }
 
     @PostMapping("/product/mainMenu")
-    public String addMainMenu(MainMenuForm mainMenuForm, Model model) throws IOException {
+    public String addMainMenu(@Value("${custom.path.upload-images}") String uploadPath,
+                              MainMenuForm mainMenuForm,
+                              Model model) throws IOException {
         MainMenu mainMenu = new MainMenu();
 
         mainMenu.setCategory(mainMenuForm.getCategory());
@@ -139,7 +142,7 @@ public class AdminController {
         mainMenu.setPrice(mainMenuForm.getPrice());
         mainMenu.setMaterial(mainMenuForm.getMaterial());
 
-        String uploadDir = "src/main/resources/static/image/mainMenu/";
+        String uploadDir = uploadPath+"/image/mainMenu";
         String fileName = mainMenu.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png";
 
         mainMenu.setLogoFileName(fileName);
@@ -166,9 +169,13 @@ public class AdminController {
     }
 
     @PutMapping("/product/mainMenu/{id}")
-    public String editMainMenu(@PathVariable Long id, MainMenuForm mainMenuForm, Model model) throws IOException {
+    public String editMainMenu(
+            @Value("${custom.path.upload-images}") String uploadPath,
+            @PathVariable Long id,
+            MainMenuForm mainMenuForm,
+            Model model) throws IOException {
         String fileName = StringUtils.cleanPath(mainMenuForm.getImage().getOriginalFilename());
-        String uploadDir = "src/main/resources/static/image/mainMenu/";
+        String uploadDir = uploadPath+"/image/mainMenu";
         try{
             FileUploadUtil.saveFile(uploadDir, fileName, mainMenuForm.getImage());
         }
@@ -206,7 +213,10 @@ public class AdminController {
     }
 
     @PostMapping("/product/topping/")
-    public String addTopping(ToppingForm toppingForm, Model model) throws IOException {
+    public String addTopping(
+            @Value("${custom.path.upload-images}") String uploadPath,
+            ToppingForm toppingForm,
+            Model model) throws IOException {
         Topping topping = new Topping();
 
         topping.setCategory(toppingForm.getCategory());
@@ -214,7 +224,7 @@ public class AdminController {
         topping.setNameEn(toppingForm.getNameEn());
         topping.setPrice(toppingForm.getPrice());
 
-        String uploadDir = "src/main/resources/static/image/topping/";
+        String uploadDir = uploadPath+"/image/topping";
         String fileName = topping.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png";
 
         topping.setLogoFileName(fileName);
@@ -241,7 +251,11 @@ public class AdminController {
     }
 
     @PutMapping("/product/topping/{id}")
-    public String editTopping(@PathVariable Long id, ToppingForm toppingForm, Model model) throws IOException {
+    public String editTopping(
+            @Value("${custom.path.upload-images}") String uploadPath,
+            @PathVariable Long id,
+            ToppingForm toppingForm,
+            Model model) throws IOException {
         Topping topping = new Topping();
 
         topping.setCategory(toppingForm.getCategory());
@@ -249,7 +263,7 @@ public class AdminController {
         topping.setNameEn(toppingForm.getNameEn());
         topping.setPrice(toppingForm.getPrice());
 
-        String uploadDir = "src/main/resources/static/image/topping/";
+        String uploadDir = uploadPath+"/image/topping";
         String fileName = topping.getUpdatedTimeAt().toString().replace(".", "-").replace(":", "-")+".png";
 
         topping.setLogoFileName(fileName);
@@ -304,9 +318,10 @@ public class AdminController {
     public String updateProfile(
             @RequestParam("name") String name,
             @RequestParam("image") MultipartFile multipartFile,
+            @Value("${custom.path.upload-images}") String uploadPath,
             Model model) throws IOException {
 
-        String uploadDir = "src/main/resources/static/image/store/";
+        String uploadDir = uploadPath+"/image/store";
 
         Store store = new Store();
         store.setName(name);
@@ -322,6 +337,8 @@ public class AdminController {
 
         storeService.updateStore(store);
         model.addAttribute("active", "store");
+
+        log.info(uploadDir);
 
         return "redirect:./";
     }

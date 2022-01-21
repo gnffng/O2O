@@ -11,7 +11,7 @@
     <a th:unless="${active=='statistic'}" href="/admin/statistic/"><i class="fa fa-fw fa-chart-pie"></i> 통계</a>
     <a th:if="${active=='store'}" class="active" href="/admin/store/"><i class="fa fa-fw fa-home"></i> 가게</a>
     <a th:unless="${active=='store'}" href="/admin/store/"><i class="fa fa-fw fa-home"></i> 가게</a>
-    <form th:action="@{/logout}" method="post" class="logout">
+    <form th:action="@{/admin/logout}" method="post" class="logout">
         <a onclick="document.getElementsByClassName('logout')[0].submit();"><i class="fa fa-fw fa-home"></i> 로그아웃</a>
     </form>
 </div>
