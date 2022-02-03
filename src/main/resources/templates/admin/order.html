@@ -48,7 +48,7 @@
                             <td th:text="${order.status}">상태</td>
                             <td>
                                 <a th:href="'./'+${order.id}+'/'">
-                                    <button class="btn btn-sm btn-outline-secondary">수정</button>
+                                    <button class="btn btn-sm btn-outline-secondary">자세히</button>
                                 </a>
                                 <form th:action="'./'+${order.id}+'/'"
                                       method="post"

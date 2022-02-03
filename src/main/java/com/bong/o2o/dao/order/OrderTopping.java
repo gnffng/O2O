@@ -7,14 +7,14 @@ import javax.persistence.*;
 
 @Entity
 public class OrderTopping {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "orderMenu")
     OrderMenu orderMenu;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "topping")
     Topping topping;
 

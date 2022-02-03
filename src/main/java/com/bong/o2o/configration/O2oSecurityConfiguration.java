@@ -34,7 +34,7 @@ public class O2oSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/css/**",
                 "/image/**",
                 "/",
-                "/api",
+                "/api/**",
                 "/admin/signUp",
                 "/admin/login"
         };

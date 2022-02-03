@@ -96,7 +96,7 @@ public class AdminController {
     @GetMapping("/order/{id}")
     public String editOrderForm(@PathVariable Long id, Model model){
         OrderSheet orderSheet = orderService.readById(id).get();
-        model.addAttribute("order", orderSheet);
+        model.addAttribute("orderSheet", orderSheet);
         model.addAttribute("active", "order");
 
         return "admin/editOrder";

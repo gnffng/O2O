@@ -8,18 +8,18 @@ import javax.persistence.*;
 @Entity
 public class OrderMenu {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "orderSheet")
     OrderSheet orderSheet;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     @JoinColumn(name = "orderMenu")
     List<OrderTopping> orderToppings;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "mainMenu")
     MainMenu mainMenu;
 

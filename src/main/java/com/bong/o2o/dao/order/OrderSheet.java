@@ -10,10 +10,10 @@ public class OrderSheet {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderSheet")
+    @OneToMany(mappedBy = "orderSheet")
     List<OrderMenu> orderMenus;
 
     Long amount;
