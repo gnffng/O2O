@@ -52,6 +52,11 @@ public class AdminController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @GetMapping("/test")
+    public String test(){
+        return "admin/test";
+    }
+
     //테스트용 admin계정 생성
     @GetMapping("/signUp")
     public String signUp(){
