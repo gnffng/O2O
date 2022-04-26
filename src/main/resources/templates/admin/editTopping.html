@@ -10,9 +10,10 @@
     <title>Edit Topping</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <!-- Custom styles for this template -->
-    <link href="/bootstrap/docs/4.0/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <link href="/css/product.css" rel="stylesheet">
 </head>
 <body>
 <nav>
@@ -85,8 +86,8 @@
                     <div class="col-6">
                         <label for="image" class="form-label">Logo</label>
                         <div class="input-group has-validation">
-                            <div class="col-3">
-                                <img th:src="'/image/topping/' + ${topping.logoFileName}" style="width:100%"/>
+                            <div class="box">
+                                <img th:src="'/image/topping/' + ${topping.logoFileName}" class="profile" />
                             </div>
                             <div class="col-9">
                                 <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg" />
@@ -110,10 +111,10 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script>
-            window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-    </script>
-<script src="/bootstrap/assets/js/vendor/popper.min.js"></script>
-<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+</script>
+<script src="/js/bootstrap/popper.min.js"></script>
+<script src="/js/bootstrap/bootstrap.min.js"></script>
 
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>

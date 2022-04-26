@@ -88,7 +88,7 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'content': $("#content").val()}));
+    stompClient.send("/app/notification", {}, JSON.stringify({'content': $("#content").val()}));
 }
 
 function showGreeting(message) {

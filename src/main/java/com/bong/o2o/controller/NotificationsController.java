@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class NotificationsController {
-    @MessageMapping("/hello")
+    @MessageMapping("/notification")
     @SendTo("/topic/greetings")
     public NotificationMessage greeting(ClientMessage clientMessage) {
         return new NotificationMessage(clientMessage.getContent());
