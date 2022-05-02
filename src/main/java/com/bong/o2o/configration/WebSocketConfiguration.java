@@ -11,12 +11,12 @@ import org.springframework.web.socket.config.annotation.*;
 public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic");
-        registry.setApplicationDestinationPrefixes("/app");
+        registry.enableSimpleBroker("/topic", "/queue");
+        registry.setApplicationDestinationPrefixes("/socket");
     }
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/notifications")
+        registry.addEndpoint("/connect")
                 .withSockJS();
 //                .setAllowedOrigins("http://localhost:8080", "http://127.0.0.1:8080")
 //                .setAllowedOrigins("*");

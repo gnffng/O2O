@@ -52,9 +52,14 @@ public class AdminController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @GetMapping("/test")
-    public String test(){
-        return "admin/test";
+    @GetMapping("/sendNotification")
+    public String sendNotification(){
+        return "admin/sendNotification";
+    }
+
+    @GetMapping("/notification")
+    public String notification(){
+        return "admin/notification";
     }
 
     //테스트용 admin계정 생성
