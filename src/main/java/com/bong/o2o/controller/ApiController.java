@@ -4,8 +4,11 @@ import com.bong.o2o.dao.order.OrderForm;
 import com.bong.o2o.dao.order.OrderSheet;
 import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.MainMenuForm;
+import com.bong.o2o.service.NotificationService;
 import com.bong.o2o.service.OrderService;
 import com.bong.o2o.service.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,18 +20,24 @@ public class ApiController {
 
     ProductService productService;
     OrderService orderService;
+    NotificationService notificationService;
 
     @Autowired
-    public ApiController(ProductService productService, OrderService orderService) {
+    public ApiController(ProductService productService, OrderService orderService, NotificationService notificationService) {
         this.productService = productService;
         this.orderService = orderService;
+        this.notificationService = notificationService;
     }
 
     //Order CRUD
     @PostMapping("/order")
     @ResponseBody
-    public OrderForm addOrder(@RequestBody OrderForm orderForm){
+    public OrderForm addOrder(@RequestBody OrderForm orderForm) throws JsonProcessingException {
         orderService.createOrder(orderForm);
+
+        ObjectMapper mapper = new ObjectMapper();
+        notificationService.sendMessage(mapper.writeValueAsString(orderForm));
+
         return orderForm;
     }
 
