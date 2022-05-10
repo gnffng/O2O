@@ -22,8 +22,8 @@
 <p>1. 데이터베이스의 경로를 'application.priperties' 파일의 변수 'spring.datasource.url'에 입력한다.</p>
 <p>2. 'application.priperties' 파일의 변수 'spring.datasource.username', 'spring.datasource.password'에 DB의 권한정보를 입력한다.</p><br>
 
-<h3>관리자 페이지 URL</h3>
+<h1>관리자 페이지 URL</h1>
 <p>추가필요</p><br>
 
-<h3>API URL</h3>
+<h1>API URL</h1>
 <p>추가필요</p>
