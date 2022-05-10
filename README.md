@@ -22,3 +22,10 @@ Spring Boot 기반의 주문관리 시스템입니다.<br>
 <h2>DataBase 설정</h2>
 <p>1. 데이터베이스의 경로를 'application.priperties' 파일의 변수 'spring.datasource.url'에 입력한다.</p>
 <p>2. 'application.priperties' 파일의 변수 'spring.datasource.username', 'spring.datasource.password'에 DB의 권한정보를 입력한다.</p>
+<br>
+
+<h2>관리자 페이지 URL</h2>
+<p>추가필요</p>
+
+<h2>API URL</h2>
+<p>추가필요</p>
