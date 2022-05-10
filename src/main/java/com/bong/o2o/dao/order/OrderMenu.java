@@ -2,24 +2,26 @@ package com.bong.o2o.dao.order;
 
 import java.util.*;
 import com.bong.o2o.dao.product.MainMenu;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "idJsonCount")
 public class OrderMenu {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orderSheet")
     OrderSheet orderSheet;
 
-    @OneToMany
-    @JoinColumn(name = "orderMenu")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderMenu")
     List<OrderTopping> orderToppings;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mainMenu")
     MainMenu mainMenu;
 

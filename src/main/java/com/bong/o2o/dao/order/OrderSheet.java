@@ -1,9 +1,13 @@
 package com.bong.o2o.dao.order;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.*;
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "idJsonCount")
 public class OrderSheet {
     public enum Status{
         Preparing, Ready, Finish;
@@ -13,8 +17,8 @@ public class OrderSheet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @OneToMany(mappedBy = "orderSheet")
-    List<OrderMenu> orderMenus;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orderSheet")
+     List<OrderMenu> orderMenus;
 
     Long amount;
     Status status;

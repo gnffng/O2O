@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <!--    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">-->
+  <th:block th:replace="admin/base/defaultHead" />
 
-  <title>Dashboard Template for Bootstrap</title>
+  <link href="/css/product.css" rel="stylesheet">
 
-  <!-- Bootstrap core CSS -->
-  <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  <!-- Custom styles for this template -->
-  <link href="/css/dashboard.css" rel="stylesheet">
+  <title>주문 수정</title>
 </head>
 <body>
+
 <nav>
   <div th:replace="admin/base/nav"/>
 </nav>
-
 
 <div class="container-fluid">
   <div class="row">
@@ -96,21 +89,12 @@
   </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script>
-          window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
-  </script>
-<script src="/js/bootstrap/popper.min.js"></script>
-<script src="/js/bootstrap/bootstrap.min.js"></script>
-
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
 <script>
-            feather.replace()
-    </script>
+          feather.replace();
+          connect(notify);
+</script>
 
 <footer>
   <div th:replace="admin/base/footer"/>

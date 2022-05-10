@@ -62,8 +62,10 @@ public class OrderService {
                 orderTopping.setAmount(topping.getPrice() * orderToppingForm.getCount());
                 price += orderTopping.getAmount();
 
+                orderToppings.add(orderTopping);
                 orderToppingRepository.save(orderTopping);
             }
+            orderMenu.setOrderToppings(orderToppings);
 
             amount += price;
             orderMenu.setAmount(price);

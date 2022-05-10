@@ -32,13 +32,13 @@ public class ApiController {
     //Order CRUD
     @PostMapping("/order")
     @ResponseBody
-    public OrderForm addOrder(@RequestBody OrderForm orderForm) throws JsonProcessingException {
-        orderService.createOrder(orderForm);
+    public OrderSheet addOrder(@RequestBody OrderForm orderForm){
+        OrderSheet order = orderService.createOrder(orderForm);
 
         ObjectMapper mapper = new ObjectMapper();
-        notificationService.sendMessage(mapper.writeValueAsString(orderForm));
+        notificationService.sendMessage(order);
 
-        return orderForm;
+        return order;
     }
 
     @DeleteMapping("/order/{id}")
