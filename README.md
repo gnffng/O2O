@@ -22,8 +22,16 @@
 <p>1. 데이터베이스의 경로를 'application.priperties' 파일의 변수 'spring.datasource.url'에 입력한다.</p>
 <p>2. 'application.priperties' 파일의 변수 'spring.datasource.username', 'spring.datasource.password'에 DB의 권한정보를 입력한다.</p><br>
 
-<h1>관리자 페이지 URL</h1>
-<p>추가필요</p><br>
+<h1>관리자 페이지 URL(GET)</h1>
+<p>/admin/order : 주문목록 페이지</p>
+<p>/admin/product : 상품목록 페이지</p>
+<p>/admin/statistic : 통계 페이지</p>
+<p>/admin/store : 가게정보 페이지</p>
 
 <h1>API URL</h1>
-<p>추가필요</p>
+<p>(GET) /api/order/{id} : 주문조회</p>
+<p>(POST) /api/order : 주문하기</p>
+<p>-> 매개변수 추가 필요</p>
+<p>(PUT) /api/order : 주문수정</p>
+<p>-> 매개변수 추가 필요</p>
+<p>(DELETE) /api/order/{id} : 주문취소</p>
