@@ -5,6 +5,7 @@ import java.util.*;
 import com.bong.o2o.dao.order.*;
 import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.Topping;
+import com.bong.o2o.dao.statistic.IdOrderSum;
 import com.bong.o2o.repository.order.OrderMenuRepository;
 import com.bong.o2o.repository.order.OrderSheetRepository;
 import com.bong.o2o.repository.order.OrderToppingRepository;
@@ -84,10 +85,6 @@ public class OrderService {
         return orderSheetRepository.findById(id);
     }
 
-    public List<OrderSheet> readAll(){
-        return orderSheetRepository.findAll();
-    }
-
     public OrderSheet update(OrderSheet orderSheet){
         return orderSheetRepository.save(orderSheet);
     }
@@ -103,5 +100,13 @@ public class OrderService {
         }
 
         orderSheetRepository.delete(orderSheet);
+    }
+
+    public List<OrderSheet> readAll(){
+        return orderSheetRepository.findAll();
+    }
+
+    public List<IdOrderSum> groubByMenuId(){
+        return orderMenuRepository.findGroupByOrderWithJPQL();
     }
 }

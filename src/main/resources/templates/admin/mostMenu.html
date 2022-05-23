@@ -1,0 +1,9 @@
+<figure class="highcharts-figure">
+    <div id="container"></div>
+</figure>
+
+<script src="/js/pie.js"></script>
+<script th:inline="javascript">
+        let originalArray = [[${list}]];
+        drawChart(originalArray);
+</script>

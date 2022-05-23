@@ -6,6 +6,7 @@ import com.bong.o2o.dao.product.MainMenu;
 import com.bong.o2o.dao.product.MainMenuForm;
 import com.bong.o2o.dao.product.Topping;
 import com.bong.o2o.dao.product.ToppingForm;
+import com.bong.o2o.dao.statistic.IdOrderSum;
 import com.bong.o2o.dao.store.Store;
 import com.bong.o2o.service.AdminService;
 import com.bong.o2o.service.OrderService;
@@ -52,6 +53,13 @@ public class AdminController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @GetMapping("/test")
+    public String test(Model model){
+        List<IdOrderSum> lstGroupByMenuId = orderService.groubByMenuId();
+        model.addAttribute("list", lstGroupByMenuId);
+        return "admin/testPie";
+    }
+
     @GetMapping("/sendNotification")
     public String sendNotification(){
         return "admin/sendNotification";
@@ -89,6 +97,9 @@ public class AdminController {
     //주문
     @GetMapping("/order")
     public String order(Model model){
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
+        
         List<OrderSheet> orders = orderService.readAll();
         model.addAttribute("orders", orders);
         model.addAttribute("active", "order");
@@ -98,8 +109,11 @@ public class AdminController {
 
     @DeleteMapping("/order/{id}")
     public String deleteOrder(@PathVariable Long id, Model model){
-        orderService.deleteOrder(id);
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "order");
+        
+        orderService.deleteOrder(id);
         return "redirect:../";
     }
 
@@ -107,6 +121,9 @@ public class AdminController {
     public String editOrderForm(@PathVariable Long id, Model model){
         OrderSheet orderSheet = orderService.readById(id).get();
         model.addAttribute("orderSheet", orderSheet);
+
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "order");
 
         return "admin/editOrder";
@@ -117,6 +134,9 @@ public class AdminController {
         OrderSheet orderSheet = orderService.readById(id).get();
         orderSheet.setStatus(status);
         orderService.update(orderSheet);
+
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "order");
 
         return "redirect:../";
@@ -130,6 +150,9 @@ public class AdminController {
 
         model.addAttribute("menus", menus);
         model.addAttribute("toppings",toppings);
+
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
 
         return "admin/product";
@@ -166,6 +189,9 @@ public class AdminController {
         }
 
         productService.createMenu(mainMenu);
+
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
 
         return "redirect:../";
@@ -174,6 +200,9 @@ public class AdminController {
     @GetMapping("/product/mainMenu/{id}")
     public String editMainMenuForm(Model model, @PathVariable Long id){
         model.addAttribute("menu", productService.readMenuById(id).get());
+
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
         return "admin/editMainMenu";
     }
@@ -203,6 +232,9 @@ public class AdminController {
         menu.setLogoFileName(fileName);
 
         productService.updateMenu(id, menu);
+
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
 
         return "redirect:../../";
@@ -211,6 +243,8 @@ public class AdminController {
     @DeleteMapping("/product/mainMenu/{id}")
     public String deleteMainMenu(@PathVariable Long id, Model model){
         productService.deleteMenu(productService.readMenuById(id).get());
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
 
         return "redirect:../../";
@@ -248,6 +282,8 @@ public class AdminController {
         }
 
         productService.createTopping(topping);
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
 
         return "redirect:../";
@@ -256,6 +292,8 @@ public class AdminController {
     @GetMapping("/product/topping/{id}/")
     public String editToppingForm(@PathVariable Long id, Model model){
         model.addAttribute("topping", productService.readToppingById(id).get());
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
         return "admin/editTopping";
     }
@@ -287,6 +325,8 @@ public class AdminController {
         }
 
         productService.updateTopping(id, topping);
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
 
         return "redirect:../../";
@@ -295,6 +335,8 @@ public class AdminController {
     @DeleteMapping("/product/topping/{id}")
     public String deleteTopping(@PathVariable Long id, Model model){
         productService.deleteTopping(productService.readToppingById(id).get());
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
 
         return "redirect:../../";
@@ -303,6 +345,11 @@ public class AdminController {
     //통계
     @GetMapping("/statistic")
     public String statistic(Model model) {
+        List<IdOrderSum> lstGroupByMenuId = orderService.groubByMenuId();
+        model.addAttribute("list", lstGroupByMenuId);
+
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "statistic");
         return "admin/statistic";
     }

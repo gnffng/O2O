@@ -25,10 +25,10 @@ public class ProductService {
     //Menu Service
 
     ////Create
-    public Long createMenu(MainMenu mainMenu) {
+    public MainMenu createMenu(MainMenu mainMenu) {
         validateDuplicateMenu(mainMenu);
         menuRepository.save(mainMenu);
-        return mainMenu.getId();
+        return mainMenu;
     }
 
     ////Read

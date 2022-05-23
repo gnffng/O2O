@@ -30,6 +30,12 @@ public class ApiController {
     }
 
     //Order CRUD
+    @GetMapping("/order/{id}")
+    @ResponseBody
+    public OrderSheet getOrder(@PathVariable Long id){
+        return orderService.readById(id).get();
+    }
+
     @PostMapping("/order")
     @ResponseBody
     public OrderSheet addOrder(@RequestBody OrderForm orderForm){
@@ -41,6 +47,15 @@ public class ApiController {
         return order;
     }
 
+    @PutMapping("/order/{id}")
+    @ResponseBody
+    public OrderSheet editOrder(@PathVariable Long id, @RequestBody OrderSheet newOrder){
+        newOrder.setId(id);
+        orderService.update(newOrder);
+
+        return newOrder;
+    }
+
     @DeleteMapping("/order/{id}")
     @ResponseBody
     public String deleteOrder(@PathVariable Long id){
@@ -48,41 +63,4 @@ public class ApiController {
         return "delete OrderSheet(" + id + ")";
     }
 
-    //MainMenu CRUD
-    @PostMapping("/main-menu")
-    @ResponseBody
-    public MainMenu addMenu(@RequestBody MainMenuForm mainMenuForm){
-        MainMenu newMenu = new MainMenu();
-        newMenu.setNameKor(mainMenuForm.getNameKor());
-        newMenu.setNameEn(mainMenuForm.getNameEn());
-        newMenu.setPrice(mainMenuForm.getPrice());
-        newMenu.setCategory(mainMenuForm.getCategory());
-        newMenu.setMaterial(mainMenuForm.getMaterial());
-
-        productService.createMenu(newMenu);
-
-        return newMenu;
-    }
-
-    @GetMapping("/main-menu/{id}")
-    @ResponseBody
-    public MainMenu findMenu(@PathVariable("nameKor") String nameKor){
-        return productService.readMenuByNameKor(nameKor)
-                .orElseThrow(IllegalStateException::new);
-    }
-
-    @GetMapping("/main-menu")
-    @ResponseBody
-    public List<MainMenu> findMenus(){
-        return productService.readMenus();
-    }
-
-    @DeleteMapping("/main-menu/{nameKor}")
-    @ResponseBody
-    public MainMenu deleteMenu(@PathVariable("id") Long id){
-        MainMenu mainMenu = productService.readMenuById(id).orElseThrow(IllegalStateException::new);
-        productService.deleteMenu(mainMenu);
-
-        return mainMenu;
-    }
 }

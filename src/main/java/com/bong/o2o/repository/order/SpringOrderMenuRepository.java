@@ -2,7 +2,9 @@ package com.bong.o2o.repository.order;
 
 import com.bong.o2o.dao.order.OrderMenu;
 import com.bong.o2o.dao.order.OrderSheet;
+import com.bong.o2o.dao.statistic.IdOrderSum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
