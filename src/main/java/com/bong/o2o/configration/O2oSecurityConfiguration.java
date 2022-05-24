@@ -33,11 +33,9 @@ public class O2oSecurityConfiguration extends WebSecurityConfigurerAdapter {
         String[] staticResources  =  {
                 "/css/**",
                 "/image/**",
-                "/",
                 "/api/**",
                 "/admin/signUp",
                 "/admin/login",
-                "/**"
         };
 
         http.authorizeRequests()
@@ -54,24 +52,24 @@ public class O2oSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swns/**")
                     .permitAll()
 
-//                .antMatchers("/admin/**")
-//                    .hasRole("ADMIN")
+                .antMatchers("/admin/**")
+                    .hasRole("ADMIN")
 
                 .anyRequest().authenticated()
                     .and()
 
-//                .formLogin()
-//                    .loginPage("/admin/login")
-//                    .defaultSuccessUrl("/admin/order")
-//                    .successHandler(loginSuccessHandler)
-//                    .permitAll()
-//                    .and()
-//
-//                .logout()
-//                    .logoutUrl("/admin/logout")
-//                    .logoutSuccessUrl("/admin/login") // 로그아웃 성공시 리다이렉트 주소
-//                    .invalidateHttpSession(true) // 로그아웃 이후 세션 전체 삭제 여부
-//                    .and()
+                .formLogin()
+                    .loginPage("/admin/login")
+                    .defaultSuccessUrl("/admin/order")
+                    .successHandler(loginSuccessHandler)
+                    .permitAll()
+                    .and()
+
+                .logout()
+                    .logoutUrl("/admin/logout")
+                    .logoutSuccessUrl("/admin/login") // 로그아웃 성공시 리다이렉트 주소
+                    .invalidateHttpSession(true) // 로그아웃 이후 세션 전체 삭제 여부
+                    .and()
 
                 .cors()
                     .and()
