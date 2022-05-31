@@ -86,7 +86,7 @@ public class O2oSecurityConfiguration extends WebSecurityConfigurerAdapter {
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
             Admin admin = springAdminRepository.findById(username).orElseThrow(
-                    () -> new IllegalArgumentException("ID를 확인해주십시오.")
+                    () -> new IllegalArgumentException("ID INVALID ERROR.")
             );
             return new User(admin.getId(), admin.getPassword(), Arrays.asList(new SimpleGrantedAuthority(admin.getRole())));
         }

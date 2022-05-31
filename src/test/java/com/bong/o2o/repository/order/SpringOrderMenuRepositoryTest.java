@@ -71,7 +71,7 @@ class SpringOrderMenuRepositoryTest {
 
         logger.info("총개수 : " + lstOrderSum.size());
         for(IdOrderSum idOrderSum : lstOrderSum){
-            logger.info(idOrderSum.getMainMenu() + " : " + idOrderSum.getCount());
+            logger.info(idOrderSum.getName() + " : " + idOrderSum.getY());
         }
         assertThat(lstOrderSum.size()).isEqualTo(lstOrderSum.size());
     }
