@@ -8,7 +8,7 @@ RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
 
 # 빌더 이미지에서 애플리케이션 빌드
 COPY . /o2o
-RUN gradle clean bootJar -x test --no-daemon
+RUN gradle clean build -x test --no-daemon
 
 # 소스 코드 복사
 COPY /o2o/build/libs/*-SNAPSHOT.jar app.jar
