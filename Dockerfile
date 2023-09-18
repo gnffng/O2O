@@ -11,5 +11,4 @@ COPY . .
 RUN gradle clean build -x Test --no-daemon
 
 # 소스 코드 복사
-CMD ["pwd"]
-CMD ["java", "-jar", "./build/libs/*.jar"]
+CMD ["java", "-jar", "/o2o/build/libs/O2O-0.0.1-SNAPSHOT-plain.jar"]
