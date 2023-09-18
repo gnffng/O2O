@@ -8,10 +8,10 @@ RUN gradle build -x test --parallel --continue > /dev/null 2>&1 || true
 
 # 빌더 이미지에서 애플리케이션 빌드
 COPY . /build
-RUN gradle clean build -x Test --no-daemon --parallel
+RUN gradle build -x test --parallel
 
 # 애플리케이션을 빌드할 디렉토리 생성
-FROM gradle:jdk17 AS build
+FROM gradle:jdk17
 WORKDIR /o2o
 # 빌더 이미지에서 jar 파일만 복사
 # COPY --from=builder /build/build/libs/*-SNAPSHOT.jar ./app.jar
