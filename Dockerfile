@@ -5,7 +5,7 @@ FROM gradle:jdk17 AS build
 WORKDIR /o2o
 
 # 애플리케이션 빌드
-RUN gradle clean build --no-daemon --exclude-task test
+RUN gradle clean build -x Test --no-daemon
 
 # 소스 코드 복사
 COPY build/libs/*.jar app.jar
