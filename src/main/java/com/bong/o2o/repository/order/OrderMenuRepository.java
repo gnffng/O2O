@@ -18,6 +18,6 @@ public interface OrderMenuRepository {
             "SELECT " +
                     "new com.bong.o2o.dao.statistic.IdOrderSum(om.mainMenu.nameKor, COUNT (om.id)) " +
                     "FROM OrderMenu om " +
-                    "GROUP BY om.mainMenu")
+                    "GROUP BY om.mainMenu.nameKor")
     public List<IdOrderSum> findGroupByOrderWithJPQL();
 }

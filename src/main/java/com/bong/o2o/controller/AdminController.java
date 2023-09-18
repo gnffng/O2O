@@ -159,7 +159,10 @@ public class AdminController {
     }
 
     @GetMapping("/product/mainMenu")
-    public String addMainMenuForm(){
+    public String addMainMenuForm(Model model){
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
+
         return "admin/addMainMenu";
     }
 
@@ -252,6 +255,8 @@ public class AdminController {
 
     @GetMapping("/product/topping/")
     public String addToppingForm(Model model){
+        Store store = storeService.readStore();
+        model.addAttribute("store", store);
         model.addAttribute("active", "product");
         return "admin/addTopping";
     }
