@@ -11,4 +11,5 @@ COPY . .
 RUN gradle clean build -x Test --no-daemon
 
 # 소스 코드 복사
+CMD ["pwd"]
 CMD ["java", "-jar", "./build/libs/*.jar"]
